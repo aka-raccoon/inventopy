@@ -1,0 +1,37 @@
+default_stages: [commit]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: local
+    hooks:
+      - id: black
+        name: black check
+        description: "Check file with Black"
+        entry: .venv/bin/black
+        language: python
+        types: [python]
+        require_serial: false
+      - id: isort
+        name: isort check
+        description: "Sort import in file with Isort"
+        entry: .venv/bin/isort
+        language: python
+        types: [python]
+        require_serial: false
+      - id: pylint
+        name: pylint check
+        description: "Lint code with Pylint"
+        entry: .venv/bin/pylint
+        language: python
+        types: [python]
+        require_serial: true
+      - id: commitizen
+        name: commitizen check
+        description: "Check whether the commit message follows commiting rules"
+        entry: .venv/bin/cz check --commit-msg-file
+        language: python
+        require_serial: true
+        stages: [commit-msg]
